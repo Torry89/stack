@@ -1,15 +1,15 @@
-class Stack():
+class Stack:
     def __init__(self):
         self.items = []
 
     def is_empty(self):
         """Проверка на пустоту.Возвращает True или False."""
-        if self.items is None:
+        if  not self.items:
            return True
         return False
 
-    def push(self,item):
-        """"Добавление элемента в стек"""
+    def push(self, item):
+        """Добавление элемента в стек"""
         self.items.append(item)
 
 
@@ -28,11 +28,19 @@ class Stack():
 def balanser(string):
     """Баланс скобок"""
     stack = Stack()
+    dict_brackets = {'(':')','[':']','{':'}'}
     for element in string:
-        stack.push(element)
-    if stack.size() % 2 == 0:
+        if element == '(' or element == '[' or element == '{':
+          stack.push(element)
+        elif element == ')' or element == ']' or element == '}':
+            if stack.is_empty() or dict_brackets[stack.peek()] != element:
+                return "Несбалансированно"
+            else:
+                stack.pop()
+    if stack.size() == 0:
         return "Сбалансированно"
     return "Несбалансированно"
+
 
 if __name__ == '__main__':
    print(balanser('(((([{}]))))'))
